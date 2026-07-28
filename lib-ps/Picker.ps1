@@ -53,7 +53,7 @@ function Invoke-SegmentPicker {
     }
 
     [Console]::CursorVisible = $false
-    Clear-Host
+    if ($Host.UI.RawUI.WindowSize.Width -gt 0) { Clear-Host }
     & $draw
 
     while ($true) {
