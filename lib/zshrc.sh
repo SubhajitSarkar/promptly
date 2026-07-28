@@ -21,6 +21,7 @@ _backup_zshrc() {
   if [[ -f "$ZSHRC" ]]; then
     local backup="${ZSHRC}.bak.$(date +%Y%m%d%H%M%S)"
     cp "$ZSHRC" "$backup"
+    manifest_set "zshrc_backup" "$backup"
     info "Backed up $HOME/.zshrc to $backup"
   else
     touch "$ZSHRC"

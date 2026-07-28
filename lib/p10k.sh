@@ -10,9 +10,11 @@ install_p10k() {
 
   if [[ -d "$P10K_DIR" ]]; then
     success "Powerlevel10k already cloned"
+    manifest_set_bool "p10k_was_preexisting" "true"
   else
     info "Cloning Powerlevel10k..."
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$P10K_DIR"
+    manifest_set_bool "p10k_was_preexisting" "false"
     success "Powerlevel10k cloned"
   fi
 
@@ -30,6 +32,7 @@ _deploy_p10k_config() {
     local backup="${P10K_CONFIG_DEST}.bak.$(date +%Y%m%d%H%M%S)"
     warn "Existing $HOME/.p10k.zsh found - backing up to $backup"
     cp "$P10K_CONFIG_DEST" "$backup"
+    manifest_set "p10k_backup" "$backup"
   fi
 
   cp "$P10K_CONFIG_SRC" "$P10K_CONFIG_DEST"

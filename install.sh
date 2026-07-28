@@ -47,6 +47,8 @@ source "$SCRIPT_DIR/lib/omz.sh"
 source "$SCRIPT_DIR/lib/p10k.sh"
 # shellcheck source=lib/zshrc.sh
 source "$SCRIPT_DIR/lib/zshrc.sh"
+# shellcheck source=lib/manifest.sh
+source "$SCRIPT_DIR/lib/manifest.sh"
 
 # ─── Banner ───────────────────────────────────────────────────────────────────
 clear
@@ -59,6 +61,9 @@ echo ""
 
 header "Detected Environment"
 print_detected_env
+
+# ─── Init manifest ────────────────────────────────────────────────────────────
+manifest_init
 
 # ─── Run setup steps ──────────────────────────────────────────────────────────
 install_deps
@@ -73,9 +78,10 @@ success "Setup complete!"
 divider
 echo ""
 echo -e "  ${BOLD}Next steps:${RESET}"
-echo -e "  1. Set your terminal font to ${CYAN}MesloLGS NF${RESET}"
+echo -e "  1. Install the font - see ${CYAN}docs/FONT_SETUP.md${RESET}"
 echo -e "  2. Run: ${CYAN}source ~/.zshrc${RESET}"
 echo -e "  3. Or open a new terminal tab"
 echo ""
 echo -e "  ${YELLOW}Tip:${RESET} Run ${CYAN}p10k configure${RESET} anytime to re-run the wizard"
+echo -e "  ${YELLOW}Tip:${RESET} Run ${CYAN}bash uninstall.sh${RESET} to revert all changes"
 echo ""

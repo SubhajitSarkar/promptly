@@ -8,7 +8,7 @@ check_sudo() {
     HAS_SUDO=true
   else
     HAS_SUDO=false
-    warn "No sudo access detected — will skip system-level installs and use fallbacks where possible."
+    warn "No sudo access detected - will skip system-level installs and use fallbacks where possible."
   fi
 }
 
@@ -59,6 +59,7 @@ if [ -x "$zsh_path" ] && [ "\$TERM_PROGRAM" != "" ]; then
   exec "$zsh_path" -l
 fi
 EOF
+  manifest_set "fallback_rc" "$login_rc"
   warn "Could not set zsh as default shell (no sudo)."
   warn "Added zsh auto-launch to $login_rc as a fallback."
   warn "To permanently change your shell later, run: chsh -s $zsh_path"

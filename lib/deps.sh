@@ -24,6 +24,7 @@ _ensure_git() {
 _ensure_zsh() {
   if command -v zsh &>/dev/null; then
     success "zsh is already installed ($(zsh --version | head -1))"
+    manifest_set_bool "zsh_was_preexisting" "true"
     _set_default_shell "$(command -v zsh)"
     return
   fi
@@ -31,6 +32,7 @@ _ensure_zsh() {
   if ! _pkg_install zsh; then
     abort_missing_dep "zsh" "https://www.zsh.org/ or ask your sysadmin to install zsh"
   fi
+  manifest_set_bool "zsh_was_preexisting" "false"
   _set_default_shell "$(command -v zsh)"
 }
 

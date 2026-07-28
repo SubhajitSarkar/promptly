@@ -26,6 +26,7 @@ if (-not $IsWindows -and $PSVersionTable.PSVersion.Major -ge 6) {
 . "$ScriptDir\lib-ps\Deps.ps1"
 . "$ScriptDir\lib-ps\OhMyPosh.ps1"
 . "$ScriptDir\lib-ps\Profile.ps1"
+. "$ScriptDir\lib-ps\Manifest.ps1"
 
 # ─── Banner ───────────────────────────────────────────────────────────────────
 Clear-Host
@@ -46,6 +47,7 @@ if ($policy -eq "Restricted" -or $policy -eq "AllSigned") {
 
 # ─── Run setup steps ──────────────────────────────────────────────────────────
 Invoke-Detect
+Manifest-Init
 Install-Deps
 Install-OhMyPosh
 Patch-Profile
@@ -57,10 +59,9 @@ Write-Success "Setup complete!"
 Write-Divider
 Write-Host ""
 Write-Host "  Next steps:" -ForegroundColor White
-Write-Host "  1. Set your terminal font to " -NoNewline; Write-Host "MesloLGS NF" -ForegroundColor Cyan
-Write-Host "     (Windows Terminal: Settings > Profile > Appearance > Font)"
+Write-Host "  1. Install the font - see " -NoNewline; Write-Host "docs/FONT_SETUP.md" -ForegroundColor Cyan
 Write-Host "  2. Restart your terminal or run: " -NoNewline; Write-Host ". `$PROFILE" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "  Tip: Edit " -NoNewline; Write-Host "~\.omp_config.json" -ForegroundColor Cyan -NoNewline
-Write-Host " to customize your prompt segments"
+Write-Host "  Tip: Run " -NoNewline; Write-Host ".\uninstall.ps1" -ForegroundColor Cyan -NoNewline
+Write-Host " to revert all changes"
 Write-Host ""

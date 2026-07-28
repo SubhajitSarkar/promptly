@@ -113,20 +113,26 @@ The script does **not** install the font automatically. See **[docs/FONT_SETUP.m
 simple-zsh-setup/
 ├── install.sh          # Entry point - macOS / Linux / WSL
 ├── install.ps1         # Entry point - Windows PowerShell
+├── uninstall.sh        # Uninstaller - macOS / Linux / WSL
+├── uninstall.ps1       # Uninstaller - Windows PowerShell
 ├── lib/                # Bash modules
 │   ├── logger.sh
 │   ├── detect.sh
 │   ├── fallback.sh
+│   ├── manifest.sh
 │   ├── deps.sh
 │   ├── omz.sh
 │   ├── p10k.sh
-│   └── zshrc.sh
+│   ├── zshrc.sh
+│   └── uninstall.sh
 ├── lib-ps/             # PowerShell modules
 │   ├── Logger.ps1
 │   ├── Detect.ps1
 │   ├── Deps.ps1
+│   ├── Manifest.ps1
 │   ├── OhMyPosh.ps1
-│   └── Profile.ps1
+│   ├── Profile.ps1
+│   └── Uninstall.ps1
 └── config/
     ├── p10k.zsh        # Powerlevel10k config (zsh)
     └── omp_config.json # Oh My Posh config (PowerShell)
@@ -152,3 +158,5 @@ Backups are created automatically:
 $PROFILE.bak.<timestamp>
 ~/.omp_config.json.bak.<timestamp>
 ```
+
+To fully uninstall and revert to your previous state, see **[docs/UNINSTALL.md](docs/UNINSTALL.md)**.

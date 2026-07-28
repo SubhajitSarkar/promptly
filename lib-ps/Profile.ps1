@@ -23,6 +23,7 @@ function _Backup-Profile {
     $timestamp = Get-Date -Format "yyyyMMddHHmmss"
     $backup    = "${PROFILE}.bak.${timestamp}"
     Copy-Item $PROFILE $backup
+    Manifest-Set "profile_backup" $backup
     Write-Info "Backed up `$PROFILE to $backup"
 }
 
