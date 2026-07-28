@@ -1,0 +1,20 @@
+name: promptly-tests
+
+services:
+  ubuntu:
+    build:
+      context: .
+      dockerfile: tests/Dockerfile.ubuntu
+    container_name: promptly-test-ubuntu
+
+  fedora:
+    build:
+      context: .
+      dockerfile: tests/Dockerfile.fedora
+    container_name: promptly-test-fedora
+
+  arch:
+    build:
+      context: .
+      dockerfile: tests/Dockerfile.arch
+    container_name: promptly-test-arch

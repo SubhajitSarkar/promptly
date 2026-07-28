@@ -46,7 +46,7 @@ register_zsh_no_sudo() {
     *)      login_rc="$HOME/.profile" ;;
   esac
 
-  local marker="# simple-zsh-setup: launch zsh"
+  local marker="# promptly: launch zsh"
   if grep -qF "$marker" "$login_rc" 2>/dev/null; then
     success "zsh launch fallback already present in $login_rc"
     return

@@ -1,0 +1,16 @@
+FROM fedora:39
+
+ENV HOME=/root
+ENV TERM=xterm-256color
+
+RUN dnf install -y git curl zsh python3 sudo && \
+    dnf clean all
+
+RUN echo "root ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+WORKDIR /promptly
+COPY . .
+
+RUN chmod +x install.sh uninstall.sh tests/run_tests.sh tests/*.sh
+
+CMD ["bash", "tests/run_tests.sh"]

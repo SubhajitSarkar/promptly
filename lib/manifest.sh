@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# lib/manifest.sh - Records install state to ~/.simple-zsh-setup/manifest.json
+# lib/manifest.sh - Records install state to ~/.promptly/manifest.json
 
-MANIFEST_DIR="$HOME/.simple-zsh-setup"
+MANIFEST_DIR="$HOME/.promptly"
 MANIFEST_FILE="$MANIFEST_DIR/manifest.json"
 
 # Called once at the start of install to initialise the manifest
