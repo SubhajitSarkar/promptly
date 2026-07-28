@@ -59,10 +59,10 @@ function _Patch-PSReadLine {
 
 # PSReadLine - syntax highlighting + autosuggestions
 Import-Module PSReadLine
-if (`$Host.UI.RawUI.WindowSize.Width -gt 0) {
+try {
     Set-PSReadLineOption -PredictionSource History
     Set-PSReadLineOption -PredictionViewStyle ListView
-}
+} catch { }
 Set-PSReadLineOption -EditMode Windows
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadLineKeyHandler -Key UpArrow   -Function HistorySearchBackward
