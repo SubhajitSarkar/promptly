@@ -26,6 +26,12 @@ $script:SegmentDefs = @(
 )
 
 function Invoke-SegmentPicker {
+    if ($env:PROMPTLY_SKIP_PICKER -eq "1") {
+        $script:SelectedSegments = @($script:SegmentDefs | Where-Object { $_.Default } | ForEach-Object { $_.Key })
+        Write-Info "Picker skipped — using defaults: $($script:SelectedSegments -join ', ')"
+        return
+    }
+
     $defs    = $script:SegmentDefs
     $count   = $defs.Count
     $cursor  = 0
@@ -71,6 +77,12 @@ function Invoke-SegmentPicker {
 }
 
 function Invoke-DetectIconMode {
+    if ($env:PROMPTLY_ICON_MODE -in @("nerd","emoji","unicode","ascii")) {
+        $script:IconMode = $env:PROMPTLY_ICON_MODE
+        Write-Info "Icon mode preset: $($script:IconMode)"
+        return
+    }
+
     Write-Host ""
     Write-Host "  Do you have a Nerd Font installed in your terminal?" -ForegroundColor White
     Write-Host "  (e.g. MesloLGS NF - see docs/FONT_SETUP.md)" -ForegroundColor Yellow
