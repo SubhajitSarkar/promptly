@@ -1,0 +1,139 @@
+name: Test — Windows
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  windows:
+    name: Windows (PowerShell 7)
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # winget needs the Visual C++ redistributable on some runner images
+      - name: Ensure winget is available
+        shell: pwsh
+        run: |
+          if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
+            Write-Host "winget not found — installing via Add-AppxPackage"
+            $url = "https://aka.ms/getwinget"
+            $out = "$env:TEMP\winget.msixbundle"
+            Invoke-WebRequest -Uri $url -OutFile $out
+            Add-AppxPackage -Path $out
+          } else {
+            Write-Host "winget available: $(winget --version)"
+          }
+
+      - name: Run install.ps1
+        shell: pwsh
+        run: |
+          # Non-interactive: pre-set icon mode and segments so the picker is skipped
+          $env:PROMPTLY_ICON_MODE     = "ascii"
+          $env:PROMPTLY_SKIP_PICKER   = "1"
+          .\\install.ps1
+
+      # ── File assertions ────────────────────────────────────────────────────
+      - name: Assert ~/.omp_config.json assembled
+        shell: pwsh
+        run: |
+          $f = Join-Path $HOME ".omp_config.json"
+          if (-not (Test-Path $f)) {
+            Write-Error "FAIL: ~/.omp_config.json not found"
+            exit 1
+          }
+          Write-Host "PASS: ~/.omp_config.json exists"
+
+      - name: Assert ~/.omp_config.json is valid JSON
+        shell: pwsh
+        run: |
+          $f = Join-Path $HOME ".omp_config.json"
+          try {
+            Get-Content $f -Raw | ConvertFrom-Json | Out-Null
+            Write-Host "PASS: ~/.omp_config.json is valid JSON"
+          } catch {
+            Write-Error "FAIL: ~/.omp_config.json is not valid JSON — $_"
+            exit 1
+          }
+
+      - name: Assert no ##ICON## placeholders left in omp_config.json
+        shell: pwsh
+        run: |
+          $f    = Join-Path $HOME ".omp_config.json"
+          $hits = Select-String -Path $f -Pattern "##ICON##" -Quiet
+          if ($hits) {
+            Write-Error "FAIL: ##ICON## placeholder found in ~/.omp_config.json"
+            exit 1
+          }
+          Write-Host "PASS: no ##ICON## placeholders"
+
+      - name: Assert manifest.json created
+        shell: pwsh
+        run: |
+          $f = Join-Path $HOME ".promptly\manifest.json"
+          if (-not (Test-Path $f)) {
+            Write-Error "FAIL: manifest.json not found"
+            exit 1
+          }
+          Write-Host "PASS: manifest.json exists"
+
+      - name: Assert manifest.json is valid JSON with expected fields
+        shell: pwsh
+        run: |
+          $f = Join-Path $HOME ".promptly\manifest.json"
+          $m = Get-Content $f -Raw | ConvertFrom-Json
+
+          $checks = @{
+            "os_type is windows"   = ($m.os_type -eq "windows")
+            "icon_mode is set"     = ($m.icon_mode -in @("nerd","emoji","unicode","ascii"))
+            "installed_at is set"  = (-not [string]::IsNullOrEmpty($m.installed_at))
+          }
+
+          $failed = 0
+          foreach ($label in $checks.Keys) {
+            if ($checks[$label]) {
+              Write-Host "PASS: $label"
+            } else {
+              Write-Error "FAIL: $label"
+              $failed++
+            }
+          }
+          if ($failed -gt 0) { exit 1 }
+
+      - name: Assert $PROFILE contains oh-my-posh init line
+        shell: pwsh
+        run: |
+          if (-not (Test-Path $PROFILE)) {
+            Write-Error "FAIL: `$PROFILE not found at $PROFILE"
+            exit 1
+          }
+          $content = Get-Content $PROFILE -Raw
+          if ($content -notmatch "oh-my-posh") {
+            Write-Error "FAIL: oh-my-posh init line not found in `$PROFILE"
+            exit 1
+          }
+          Write-Host "PASS: `$PROFILE contains oh-my-posh init"
+
+      # ── Idempotency ────────────────────────────────────────────────────────
+      - name: Second run — assert idempotent
+        shell: pwsh
+        run: |
+          $env:PROMPTLY_ICON_MODE   = "ascii"
+          $env:PROMPTLY_SKIP_PICKER = "1"
+          .\\install.ps1
+          Write-Host "PASS: second run exited 0"
+
+      - name: Second run — assert manifest still valid JSON
+        shell: pwsh
+        run: |
+          $f = Join-Path $HOME ".promptly\manifest.json"
+          try {
+            Get-Content $f -Raw | ConvertFrom-Json | Out-Null
+            Write-Host "PASS: manifest.json still valid after second run"
+          } catch {
+            Write-Error "FAIL: manifest.json invalid after second run — $_"
+            exit 1
+          }

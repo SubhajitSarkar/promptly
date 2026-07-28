@@ -1,5 +1,5 @@
 # uninstall.ps1 - Revert all changes made by install.ps1
-# Reads ~/.simple-zsh-setup/manifest.json to know exactly what to undo
+# Reads ~/.promptly/manifest.json to know exactly what to undo
 
 #Requires -Version 5.1
 
@@ -21,7 +21,7 @@ if (-not $IsWindows -and $PSVersionTable.PSVersion.Major -ge 6) {
 Clear-Host
 Write-Host ""
 Write-Host "  +==================================================+" -ForegroundColor Cyan
-Write-Host "  |   simple-zsh-setup Uninstaller (Windows)         |" -ForegroundColor Cyan
+Write-Host "  |   promptly Uninstaller (Windows)                  |" -ForegroundColor Cyan
 Write-Host "  |   Reverting to your previous state               |" -ForegroundColor Cyan
 Write-Host "+==================================================+" -ForegroundColor Cyan
 Write-Host ""

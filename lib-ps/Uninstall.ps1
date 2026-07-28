@@ -1,7 +1,7 @@
 # lib-ps/Uninstall.ps1 - Revert all changes made by install.ps1
 
 function Invoke-Uninstall {
-    $manifestFile = Join-Path $HOME ".simple-zsh-setup\manifest.json"
+    $manifestFile = Join-Path $HOME ".promptly\manifest.json"
 
     if (-not (Test-Path $manifestFile)) {
         Write-Err "No manifest found at $manifestFile"
@@ -60,7 +60,7 @@ function Invoke-Uninstall {
     }
 
     # ─── Remove manifest ──────────────────────────────────────────────────────
-    $manifestDir = Join-Path $HOME ".simple-zsh-setup"
+    $manifestDir = Join-Path $HOME ".promptly"
     Remove-Item $manifestDir -Recurse -Force -ErrorAction SilentlyContinue
     Write-Success "Removed manifest"
 }

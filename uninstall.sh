@@ -22,7 +22,7 @@ source "$SCRIPT_DIR/lib/uninstall.sh"
 clear
 echo ""
 echo "  ╔══════════════════════════════════════════════════╗"
-echo "  ║     🗑  simple-zsh-setup Uninstaller             ║"
+echo "  ║     🗑  promptly Uninstaller                     ║"
 echo "  ║     Reverting to your previous state             ║"
 echo "  ╚══════════════════════════════════════════════════╝"
 echo ""

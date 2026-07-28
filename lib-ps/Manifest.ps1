@@ -1,6 +1,6 @@
-# lib-ps/Manifest.ps1 - Records install state to ~/.simple-zsh-setup/manifest.json
+# lib-ps/Manifest.ps1 - Records install state to ~/.promptly/manifest.json
 
-$ManifestDir  = Join-Path $HOME ".simple-zsh-setup"
+$ManifestDir  = Join-Path $HOME ".promptly"
 $ManifestFile = Join-Path $ManifestDir "manifest.json"
 
 function Manifest-Init {
@@ -8,13 +8,15 @@ function Manifest-Init {
         New-Item -ItemType Directory -Path $ManifestDir -Force | Out-Null
     }
     $manifest = [ordered]@{
-        installed_at            = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
-        os_type                 = "windows"
-        profile_backup          = ""
-        omp_config_backup       = ""
-        omp_was_preexisting     = $false
+        installed_at                  = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
+        os_type                       = "windows"
+        profile_backup                = ""
+        omp_config_backup             = ""
+        omp_was_preexisting           = $false
         psreadline_was_preexisting    = $false
         terminalicons_was_preexisting = $false
+        selected_segments             = ""
+        icon_mode                     = "nerd"
     }
     $manifest | ConvertTo-Json | Set-Content -Path $ManifestFile -Encoding UTF8
 }

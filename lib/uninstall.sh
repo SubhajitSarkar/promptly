@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # lib/uninstall.sh - Uninstall logic for macOS / Linux / WSL
 
-MANIFEST_FILE="$HOME/.simple-zsh-setup/manifest.json"
+MANIFEST_FILE="$HOME/.promptly/manifest.json"
 OMZ_DIR="${ZSH:-$HOME/.oh-my-zsh}"
 OMZ_CUSTOM="${ZSH_CUSTOM:-$OMZ_DIR/custom}"
 P10K_DIR="$OMZ_CUSTOM/themes/powerlevel10k"
@@ -116,12 +116,12 @@ _remove_fallback_rc() {
   header "Removing zsh fallback from $rc"
   local tmp
   tmp="$(mktemp)"
-  sed '/# simple-zsh-setup: launch zsh/,/^fi$/d' "$rc" > "$tmp"
+  sed '/# promptly: launch zsh/,/^fi$/d' "$rc" > "$tmp"
   mv "$tmp" "$rc"
   success "Removed zsh launch fallback from $rc"
 }
 
 _remove_manifest() {
-  rm -rf "$HOME/.simple-zsh-setup"
+  rm -rf "$HOME/.promptly"
   success "Removed manifest"
 }

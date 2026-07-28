@@ -1,0 +1,44 @@
+name: Test — Linux
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ubuntu:
+    name: Ubuntu 22.04
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -f tests/Dockerfile.ubuntu -t promptly-test-ubuntu .
+
+      - name: Run test suite
+        run: docker run --rm promptly-test-ubuntu
+
+  fedora:
+    name: Fedora 39
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -f tests/Dockerfile.fedora -t promptly-test-fedora .
+
+      - name: Run test suite
+        run: docker run --rm promptly-test-fedora
+
+  arch:
+    name: Arch Linux
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -f tests/Dockerfile.arch -t promptly-test-arch .
+
+      - name: Run test suite
+        run: docker run --rm promptly-test-arch

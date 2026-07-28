@@ -16,7 +16,7 @@ bash uninstall.sh
 .\uninstall.ps1
 ```
 
-The uninstaller reads `~/.simple-zsh-setup/manifest.json` (written during install) to know exactly:
+The uninstaller reads `~/.promptly/manifest.json` (written during install) to know exactly:
 - Which backup to restore for `~/.zshrc` and `~/.p10k.zsh` (or `$PROFILE` and `~/.omp_config.json` on Windows)
 - Whether oh-my-zsh / Powerlevel10k / plugins were installed fresh or were pre-existing (pre-existing ones are left untouched)
 - Whether the no-sudo zsh launch fallback was added to `~/.bashrc` or `~/.profile`
@@ -27,7 +27,7 @@ After uninstall, open a new terminal or run `source ~/.zshrc` (or `. $PROFILE` o
 
 ## Manual uninstall
 
-If the manifest is missing (e.g. you deleted `~/.simple-zsh-setup/`), follow these steps manually.
+If the manifest is missing (e.g. you deleted `~/.promptly/`), follow these steps manually.
 
 ### macOS / Linux / WSL
 
@@ -74,7 +74,7 @@ ZSH="$HOME/.oh-my-zsh" bash "$HOME/.oh-my-zsh/tools/uninstall.sh" --unattended
 If you didn't have sudo during install, a block was added to `~/.bashrc` or `~/.profile`. Remove the lines between and including:
 
 ```
-# simple-zsh-setup: launch zsh
+# promptly: launch zsh
 ...
 fi
 ```
