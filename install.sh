@@ -12,6 +12,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/lib/logger.sh"
 # shellcheck source=lib/detect.sh
 source "$SCRIPT_DIR/lib/detect.sh"
+# shellcheck source=lib/fallback.sh
+source "$SCRIPT_DIR/lib/fallback.sh"
 
 # ─── OS Detection ─────────────────────────────────────────────────────────────
 detect_os

@@ -1,6 +1,12 @@
 # simple-zsh-setup
 
-Automated terminal prompt setup for full stack developers.
+A one-command terminal prompt setup for full stack developers.
+
+On **macOS, Linux, and WSL2** it sets up [zsh](https://www.zsh.org/) with [Oh My Zsh](https://ohmyz.sh/) and the [Powerlevel10k](https://github.com/romkatv/powerlevel10k) theme - giving you a fast, informative prompt with git status, language version segments (Node, Python, Go, Rust), execution time, and more.
+
+On **Windows** it sets up [Oh My Posh](https://ohmyposh.dev/) for PowerShell 7 with a matching theme.
+
+If you just want a better terminal prompt without spending hours configuring it manually, this is for you.
 
 | Platform                      | Script            | Prompt              |
 | ----------------------------- | ----------------- | ------------------- |
@@ -8,6 +14,21 @@ Automated terminal prompt setup for full stack developers.
 | Linux (apt/dnf/pacman/zypper) | `bash install.sh` | Powerlevel10k (zsh) |
 | WSL2                          | `bash install.sh` | Powerlevel10k (zsh) |
 | Windows (PowerShell 7+)       | `.\install.ps1`   | Oh My Posh          |
+
+## Do you need this?
+
+**Yes, if you want:**
+
+- A prompt that shows git branch, status, and language versions automatically
+- Syntax highlighting and autosuggestions in your terminal
+- A pre-configured setup that works out of the box for full stack development
+- A repeatable install you can run on any new machine
+
+**No, if:**
+
+- You already have a prompt setup you are happy with
+- You prefer to configure your shell manually
+- You are on a locked-down machine where you cannot install packages (though the script handles this gracefully - see [Re-run safety](#re-run-safety))
 
 ## What it installs
 
@@ -62,6 +83,15 @@ p10k configure
 
 This re-runs the full setup wizard - style, icons, segments, colors - and overwrites `~/.p10k.zsh`.
 
+## No font? Use ASCII mode
+
+The pre-built `config/p10k.zsh` in this repo assumes a Nerd Font is installed. If you don't want to install a font, run `p10k configure` after install and:
+
+1. Answer **No** to the icon/diamond/lock questions when asked
+2. Or select the **Pure** style - it is entirely ASCII with no font dependency
+
+This overwrites the deployed config with your ASCII preference. The font is only needed for icons - the prompt itself works fine without it.
+
 ## Font Setup
 
 The script does **not** install the font automatically. See **[docs/FONT_SETUP.md](docs/FONT_SETUP.md)** for download links and setup instructions for all terminals and IDEs.
@@ -86,6 +116,7 @@ simple-zsh-setup/
 ├── lib/                # Bash modules
 │   ├── logger.sh
 │   ├── detect.sh
+│   ├── fallback.sh
 │   ├── deps.sh
 │   ├── omz.sh
 │   ├── p10k.sh
