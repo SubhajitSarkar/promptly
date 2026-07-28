@@ -6,3 +6,4 @@ function Write-Warn    { param([string]$Message) Write-Host "[WARN]  $Message" -
 function Write-Err     { param([string]$Message) Write-Host "[ERROR] $Message" -ForegroundColor Red }
 function Write-Header  { param([string]$Message) Write-Host "`n==> $Message" -ForegroundColor Cyan }
 function Write-Divider { Write-Host "────────────────────────────────────────" -ForegroundColor Cyan }
+function Clear-Console { try { Clear-Host } catch { } }

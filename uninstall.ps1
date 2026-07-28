@@ -18,7 +18,7 @@ if (-not $IsWindows -and $PSVersionTable.PSVersion.Major -ge 6) {
 . "$ScriptDir\lib-ps\Manifest.ps1"
 . "$ScriptDir\lib-ps\Uninstall.ps1"
 
-if ($Host.UI.RawUI.WindowSize.Width -gt 0) { Clear-Host }
+Clear-Console
 Write-Host ""
 Write-Host "  +==================================================+" -ForegroundColor Cyan
 Write-Host "  |   promptly Uninstaller (Windows)                  |" -ForegroundColor Cyan
