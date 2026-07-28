@@ -1,11 +1,20 @@
 #!/usr/bin/env bash
 # tests/test_uninstall.sh - Assert uninstall.sh cleans up correctly
-# Run inside a Docker container after install.sh has already completed.
+# Runs a fresh install first to ensure a clean known state, then uninstalls.
 
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 source "$SCRIPT_DIR/helpers.sh"
+
+# Reset to clean state: remove any previous install artifacts so the
+# fresh install below takes a backup of a clean (pre-promptly) .zshrc
+rm -f "$HOME/.p10k.zsh"
+rm -f "$HOME/.zshrc"
+rm -rf "$HOME/.promptly"
+
+# Fresh install to get a clean known state before testing uninstall
+bash "$REPO_DIR/install.sh" >/dev/null 2>&1 || true
 
 section "Uninstall — exit code"
 assert_exit_0 "uninstall.sh exits 0" bash "$REPO_DIR/uninstall.sh"

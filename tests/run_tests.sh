@@ -27,9 +27,9 @@ run_suite() {
   echo -e "${BOLD}${CYAN}════════════════════════════════════════${RESET}"
 
   if bash "$file"; then
-    (( TOTAL_PASS++ ))
+    (( TOTAL_PASS++ )) || true
   else
-    (( TOTAL_FAIL++ ))
+    (( TOTAL_FAIL++ )) || true
   fi
 }
 
@@ -41,7 +41,12 @@ echo ""
 echo -e "${BOLD}${CYAN}════════════════════════════════════════${RESET}"
 echo -e "${BOLD}${CYAN}  Running install.sh...${RESET}"
 echo -e "${BOLD}${CYAN}════════════════════════════════════════${RESET}"
-bash "$REPO_DIR/install.sh"
+if bash "$REPO_DIR/install.sh"; then
+  echo -e "${GREEN}  install.sh exited 0${RESET}"
+else
+  echo -e "${RED}  install.sh FAILED (exit $?) — post-install suites will likely fail${RESET}"
+  (( TOTAL_FAIL++ )) || true
+fi
 
 # ─── Post-install assertions ──────────────────────────────────────────────────
 run_suite test_install

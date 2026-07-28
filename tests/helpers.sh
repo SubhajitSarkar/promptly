@@ -10,8 +10,8 @@ YELLOW='\033[1;33m'
 BOLD='\033[1m'
 RESET='\033[0m'
 
-pass() { echo -e "  ${GREEN}✔${RESET} $1"; (( PASS++ )); }
-fail() { echo -e "  ${RED}✘${RESET} $1"; (( FAIL++ )); }
+pass() { echo -e "  ${GREEN}✔${RESET} $1"; (( PASS++ )) || true; }
+fail() { echo -e "  ${RED}✘${RESET} $1"; (( FAIL++ )) || true; }
 section() { echo -e "\n${BOLD}${YELLOW}▶ $1${RESET}"; }
 
 assert_exit_0() {

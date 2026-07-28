@@ -9,6 +9,9 @@ source "$SCRIPT_DIR/helpers.sh"
 
 # ─── Bootstrap just enough to run the assembler ───────────────────────────────
 source "$REPO_DIR/lib/logger.sh"
+# Set OS_TYPE so manifest_init doesn't hit an unbound variable under set -u
+source "$REPO_DIR/lib/detect.sh"
+detect_os
 source "$REPO_DIR/lib/manifest.sh"
 manifest_init  # needed so manifest_set calls don't fail
 

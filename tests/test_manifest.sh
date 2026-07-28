@@ -10,8 +10,6 @@ MANIFEST="$HOME/.promptly/manifest.json"
 section "Manifest — file"
 assert_file_exists "manifest.json exists" "$MANIFEST"
 assert_json_valid  "manifest.json is valid JSON" "$MANIFEST"
-
-section "Manifest — required string fields present and non-empty"
 for field in installed_at os_type icon_mode; do
   val=$(python3 -c "import json; d=json.load(open('$MANIFEST')); print(d.get('$field',''))" 2>/dev/null)
   if [[ -n "$val" ]]; then

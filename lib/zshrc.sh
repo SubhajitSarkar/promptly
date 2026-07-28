@@ -48,8 +48,16 @@ _patch_theme() {
   fi
   # Replace any existing ZSH_THEME line, or append
   if grep -q '^ZSH_THEME=' "$ZSHRC"; then
-    sed -i.tmp 's|^ZSH_THEME=.*|ZSH_THEME="powerlevel10k/powerlevel10k"\nPOWERLEVEL9K_INSTANT_PROMPT=quiet|' "$ZSHRC"
-    rm -f "${ZSHRC}.tmp"
+    # Use printf+tmp to avoid sed \n portability issues across Linux/macOS
+    local tmp; tmp="$(mktemp)"
+    while IFS= read -r line; do
+      if [[ "$line" =~ ^ZSH_THEME= ]]; then
+        printf 'ZSH_THEME="powerlevel10k/powerlevel10k"\nPOWERLEVEL9K_INSTANT_PROMPT=quiet\n'
+      else
+        printf '%s\n' "$line"
+      fi
+    done < "$ZSHRC" > "$tmp"
+    mv "$tmp" "$ZSHRC"
     info "Replaced ZSH_THEME with powerlevel10k"
   else
     printf '\nZSH_THEME="powerlevel10k/powerlevel10k"\nPOWERLEVEL9K_INSTANT_PROMPT=quiet\n' >> "$ZSHRC"
@@ -87,24 +95,23 @@ _patch_plugins() {
     return
   fi
 
-  local current_line
+  local current_line added=0
   current_line="$(grep '^plugins=' "$ZSHRC")"
-  local new_line="$current_line"
 
   for plugin in "${required_plugins[@]}"; do
     if ! echo "$current_line" | grep -qw "$plugin"; then
-      # Insert plugin before closing )
-      new_line="${new_line/)/  $plugin\n)}"
+      # Strip closing ) and append plugin, then re-close
+      current_line="${current_line%)}$plugin)"
       info "Adding missing plugin: $plugin"
+      added=1
     fi
   done
 
-  if [[ "$new_line" != "$current_line" ]]; then
-    # Escape for sed
-    local escaped_current
-    escaped_current="$(printf '%s\n' "$current_line" | sed 's/[[\.*^$()+?{|]/\\&/g')"
-    sed -i.tmp "s|${escaped_current}|${new_line}|" "$ZSHRC"
-    rm -f "${ZSHRC}.tmp"
+  if [[ "$added" == 1 ]]; then
+    local tmp; tmp="$(mktemp)"
+    grep -v '^plugins=' "$ZSHRC" > "$tmp"
+    echo "$current_line" >> "$tmp"
+    mv "$tmp" "$ZSHRC"
   else
     success "All plugins already present"
   fi

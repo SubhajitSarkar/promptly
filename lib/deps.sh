@@ -56,8 +56,9 @@ _set_default_shell() {
     if ! grep -qF "$zsh_path" /etc/shells; then
       echo "$zsh_path" | try_sudo tee -a /etc/shells >/dev/null
     fi
-    info "Setting zsh as default shell (you may be prompted for password)..."
-    chsh -s "$zsh_path"
+    info "Setting zsh as default shell..."
+    # chsh can fail in containers/CI (no PAM) — treat as non-fatal
+    chsh -s "$zsh_path" 2>/dev/null || warn "chsh failed (expected in containers) — zsh still installed"
   else
     register_zsh_no_sudo "$zsh_path"
   fi

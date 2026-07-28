@@ -53,7 +53,7 @@ source "$SCRIPT_DIR/lib/manifest.sh"
 source "$SCRIPT_DIR/lib/picker.sh"
 
 # ─── Banner ───────────────────────────────────────────────────────────────────
-clear
+clear 2>/dev/null || true
 echo ""
 echo "  ╔══════════════════════════════════════════════════╗"
 echo "  ║     🚀 Zsh + Powerlevel10k Setup Script          ║"

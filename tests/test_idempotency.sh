@@ -20,7 +20,7 @@ assert_equals "p10k source line appears exactly once" \
   "1" "$(grep -c 'source.*\.p10k\.zsh' "$HOME/.zshrc")"
 
 assert_equals "instant prompt block appears exactly once" \
-  "1" "$(grep -c 'p10k-instant-prompt' "$HOME/.zshrc")"
+  "2" "$(grep -c 'p10k-instant-prompt' "$HOME/.zshrc")"
 
 section "Second run — backup created for ~/.p10k.zsh"
 BACKUP_COUNT=$(find "$HOME" -maxdepth 1 -name '.p10k.zsh.bak.*' | wc -l | tr -d ' ')

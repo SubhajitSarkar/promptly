@@ -40,7 +40,7 @@ pick_segments() {
       local key default
       key="$(echo "$def" | cut -d'|' -f1)"
       default="$(echo "$def" | cut -d'|' -f4)"
-      [[ "$default" == "on" ]] && SELECTED_SEGMENTS+=("$key")
+      [[ "$default" == "on" ]] && SELECTED_SEGMENTS+=("$key") || true
     done
     return
   fi

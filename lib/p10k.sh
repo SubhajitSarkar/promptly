@@ -107,18 +107,28 @@ _assemble_p10k_config() {
     if [[ -f "$seg_file" ]]; then
       segment_configs+=$'\n'
       segment_configs+="  # ─── $(echo "$key" | tr '[:lower:]' '[:upper:]') ───"$'\n'
-      grep -v '^#' "$seg_file" | grep -v '^$' | sed "s|##ICON##|${icon}|g" | while IFS= read -r line; do
+      local seg_content
+      seg_content="$(grep -v '^#' "$seg_file" | grep -v '^$' | sed "s|##ICON##|${icon}|g")"
+      while IFS= read -r line; do
         segment_configs+="  $line"$'\n'
-      done
+      done <<< "$seg_content"
     fi
   done
 
-  local config
-  config="$(cat "$_BASE_CONFIG")"
-  config="${config/##MODE##/$p10k_mode}"
-  config="${config/##SEGMENTS##/$segment_elements}"
-  config="${config/##SEGMENT_CONFIGS##/$segment_configs}"
-  echo "$config" > "$P10K_CONFIG_DEST"
+  # Use python3 for all substitutions — bash ${var/##.../} misparses ## as
+  # prefix-strip, and sed -e breaks on multi-line replacement values
+  python3 - "$_BASE_CONFIG" "$P10K_CONFIG_DEST" \
+    "$p10k_mode" "$segment_elements" "$segment_configs" <<'PYEOF'
+import sys
+src, dst, mode, segs, cfgs = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]
+with open(src) as f:
+    content = f.read()
+content = content.replace('##MODE##', mode)
+content = content.replace('##SEGMENTS##', segs)
+content = content.replace('##SEGMENT_CONFIGS##', cfgs)
+with open(dst, 'w') as f:
+    f.write(content)
+PYEOF
 }
 
 _font_notice() {
