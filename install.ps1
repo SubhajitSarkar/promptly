@@ -1,0 +1,66 @@
+# install.ps1 - Entry point for Oh My Posh full stack setup on Windows
+# Supports: Windows PowerShell 7+ (native)
+# For macOS/Linux/WSL: use install.sh instead
+#
+# Usage:
+#   .\install.ps1
+#   Or remote: irm <raw-url>/install.ps1 | iex
+
+#Requires -Version 5.1
+
+Set-StrictMode -Version Latest
+$ErrorActionPreference = "Stop"
+
+$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
+
+# ─── Guard: must be Windows ───────────────────────────────────────────────────
+if (-not $IsWindows -and $PSVersionTable.PSVersion.Major -ge 6) {
+    Write-Host "[ERROR] This script is for Windows only." -ForegroundColor Red
+    Write-Host "        For macOS/Linux/WSL, run: bash install.sh" -ForegroundColor Yellow
+    exit 1
+}
+
+# ─── Load modules ─────────────────────────────────────────────────────────────
+. "$ScriptDir\lib-ps\Logger.ps1"
+. "$ScriptDir\lib-ps\Detect.ps1"
+. "$ScriptDir\lib-ps\Deps.ps1"
+. "$ScriptDir\lib-ps\OhMyPosh.ps1"
+. "$ScriptDir\lib-ps\Profile.ps1"
+
+# ─── Banner ───────────────────────────────────────────────────────────────────
+Clear-Host
+Write-Host ""
+Write-Host "  +==================================================+" -ForegroundColor Cyan
+Write-Host "  |   🚀 Oh My Posh Full Stack Setup (Windows)       |" -ForegroundColor Cyan
+Write-Host "  |   Node, Python, Go, Rust, TS/JS                  |" -ForegroundColor Cyan
+Write-Host "  +==================================================+" -ForegroundColor Cyan
+Write-Host ""
+
+# ─── Execution Policy check ───────────────────────────────────────────────────
+$policy = Get-ExecutionPolicy -Scope CurrentUser
+if ($policy -eq "Restricted" -or $policy -eq "AllSigned") {
+    Write-Warn "Execution policy is '$policy'. Updating to RemoteSigned for CurrentUser..."
+    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+    Write-Success "Execution policy updated"
+}
+
+# ─── Run setup steps ──────────────────────────────────────────────────────────
+Invoke-Detect
+Install-Deps
+Install-OhMyPosh
+Patch-Profile
+
+# ─── Done ─────────────────────────────────────────────────────────────────────
+Write-Host ""
+Write-Divider
+Write-Success "Setup complete!"
+Write-Divider
+Write-Host ""
+Write-Host "  Next steps:" -ForegroundColor White
+Write-Host "  1. Set your terminal font to " -NoNewline; Write-Host "MesloLGS NF" -ForegroundColor Cyan
+Write-Host "     (Windows Terminal: Settings > Profile > Appearance > Font)"
+Write-Host "  2. Restart your terminal or run: " -NoNewline; Write-Host ". `$PROFILE" -ForegroundColor Cyan
+Write-Host ""
+Write-Host "  Tip: Edit " -NoNewline; Write-Host "~\.omp_config.json" -ForegroundColor Cyan -NoNewline
+Write-Host " to customize your prompt segments"
+Write-Host ""
