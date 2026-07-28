@@ -91,7 +91,7 @@ function _Deploy-OmpTheme {
             $segmentJsons += $content
         }
     }
-    $segmentsBlock = $segmentJsons -join ",`n        "
+    $segmentsBlock = ($segmentJsons -join ",`n        ") + ","
 
     $config = Get-Content $baseConfig -Raw
     $config = $config -replace '##SEGMENTS##', $segmentsBlock
