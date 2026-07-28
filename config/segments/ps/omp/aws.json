@@ -1,0 +1,9 @@
+{
+  "type": "aws",
+  "style": "plain",
+  "foreground": "#FF9900",
+  "properties": {
+    "display_default": false
+  },
+  "template": "##ICON## {{ .Profile }}{{ if .Region }}@{{ .Region }}{{ end }} "
+}

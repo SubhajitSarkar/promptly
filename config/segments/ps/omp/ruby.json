@@ -1,0 +1,10 @@
+{
+  "type": "ruby",
+  "style": "plain",
+  "foreground": "#CC342D",
+  "properties": {
+    "display_mode": "files",
+    "files": ["Gemfile", ".ruby-version", "*.rb"]
+  },
+  "template": "##ICON## {{ .Full }} "
+}

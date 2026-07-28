@@ -1,0 +1,30 @@
+# Icon registry - one row per segment
+# Columns: key	nerd	emoji	unicode	ascii
+# nerd    = Nerd Font glyph (Unicode codepoint as \uXXXX)
+# emoji   = Emoji fallback  (works on all modern terminals without any font)
+# unicode = Plain Unicode symbol (broader support than emoji, no font needed)
+# ascii   = Pure ASCII text (guaranteed to work everywhere)
+#
+# To add a new segment: add one row here, no other file needs changing for icons.
+node	\uE7A6	⬡	⬡	[node]
+python	\uF81F	🐍	~	[py]
+go	\uE626	🐹	»	[go]
+rust	\uE7A8	⚙	#	[rs]
+ruby	\uE791	💎	*	[rb]
+java	\uE738	☕	J	[java]
+php	\uE73D	🐘	P	[php]
+dotnet	\uE77F	⬡	#	[.net]
+swift	\uE755	🦅	>	[swift]
+aws	\uE7AD	☁	^	[AWS]
+azure	\uE7EB	☁	^	[Az]
+gcp	\uE7B2	☁	^	[GCP]
+docker	\uF308	🐳	⬡	[docker]
+terraform	\uE69A	⚙	#	[TF]
+kubectl	\u2388	☸	@	[k8s]
+execution_time	\uF252	⏱	~	[time]
+time	\uF017	🕐	○	[clock]
+battery	\uF240	🔋	=	[bat]
+disk_usage	\uF7C9	💾	/	[disk]
+ram	\uF85A	📊	%	[RAM]
+load	\uF080	📈	~	[load]
+vpn	\uFBF3	🔒	#	[vpn]

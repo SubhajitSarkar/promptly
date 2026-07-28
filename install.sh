@@ -49,6 +49,8 @@ source "$SCRIPT_DIR/lib/p10k.sh"
 source "$SCRIPT_DIR/lib/zshrc.sh"
 # shellcheck source=lib/manifest.sh
 source "$SCRIPT_DIR/lib/manifest.sh"
+# shellcheck source=lib/picker.sh
+source "$SCRIPT_DIR/lib/picker.sh"
 
 # ─── Banner ───────────────────────────────────────────────────────────────────
 clear
@@ -64,6 +66,11 @@ print_detected_env
 
 # ─── Init manifest ────────────────────────────────────────────────────────────
 manifest_init
+
+# ─── Segment picker ───────────────────────────────────────────────────────────
+pick_segments
+manifest_set "selected_segments" "${SELECTED_SEGMENTS[*]}"
+manifest_set "icon_mode" "$ICON_MODE"
 
 # ─── Run setup steps ──────────────────────────────────────────────────────────
 install_deps

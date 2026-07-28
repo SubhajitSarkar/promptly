@@ -17,7 +17,9 @@ manifest_init() {
   "zsh_was_preexisting": false,
   "fallback_rc": "",
   "plugins_installed": [],
-  "p10k_was_preexisting": false
+  "p10k_was_preexisting": false,
+  "selected_segments": "",
+  "icon_mode": "nerd"
 }
 EOF
 }

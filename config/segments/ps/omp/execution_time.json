@@ -1,0 +1,11 @@
+{
+  "type": "executiontime",
+  "style": "plain",
+  "foreground": "#F9E2AF",
+  "properties": {
+    "threshold": 3000,
+    "style": "austin",
+    "always_enabled": false
+  },
+  "template": "##ICON## {{ .FormattedMs }} "
+}

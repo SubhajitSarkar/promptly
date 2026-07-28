@@ -1,0 +1,10 @@
+{
+  "type": "swift",
+  "style": "plain",
+  "foreground": "#FA7343",
+  "properties": {
+    "display_mode": "files",
+    "files": ["Package.swift", "*.swift"]
+  },
+  "template": "##ICON## {{ .Full }} "
+}

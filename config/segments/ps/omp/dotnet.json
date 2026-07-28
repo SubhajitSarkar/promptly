@@ -1,0 +1,10 @@
+{
+  "type": "dotnet",
+  "style": "plain",
+  "foreground": "#512BD4",
+  "properties": {
+    "display_mode": "files",
+    "files": ["*.csproj", "*.sln", "*.fsproj", "global.json"]
+  },
+  "template": "##ICON## {{ .Full }} "
+}

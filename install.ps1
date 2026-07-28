@@ -27,6 +27,7 @@ if (-not $IsWindows -and $PSVersionTable.PSVersion.Major -ge 6) {
 . "$ScriptDir\lib-ps\OhMyPosh.ps1"
 . "$ScriptDir\lib-ps\Profile.ps1"
 . "$ScriptDir\lib-ps\Manifest.ps1"
+. "$ScriptDir\lib-ps\Picker.ps1"
 
 # ─── Banner ───────────────────────────────────────────────────────────────────
 Clear-Host
@@ -48,6 +49,10 @@ if ($policy -eq "Restricted" -or $policy -eq "AllSigned") {
 # ─── Run setup steps ──────────────────────────────────────────────────────────
 Invoke-Detect
 Manifest-Init
+Invoke-DetectIconMode
+Invoke-SegmentPicker
+Manifest-Set "selected_segments" ($script:SelectedSegments -join ' ')
+Manifest-Set "icon_mode" $script:IconMode
 Install-Deps
 Install-OhMyPosh
 Patch-Profile

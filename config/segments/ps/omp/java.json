@@ -1,0 +1,10 @@
+{
+  "type": "java",
+  "style": "plain",
+  "foreground": "#007396",
+  "properties": {
+    "display_mode": "files",
+    "files": ["pom.xml", "build.gradle", "build.gradle.kts", ".java-version", "*.java"]
+  },
+  "template": "##ICON## {{ .Full }} "
+}

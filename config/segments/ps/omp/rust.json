@@ -1,0 +1,10 @@
+{
+  "type": "rust",
+  "style": "plain",
+  "foreground": "#FAB387",
+  "properties": {
+    "display_mode": "files",
+    "files": ["Cargo.toml", "Cargo.lock", "*.rs"]
+  },
+  "template": "##ICON## {{ .Full }} "
+}

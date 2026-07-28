@@ -1,0 +1,9 @@
+{
+  "type": "docker_context",
+  "style": "plain",
+  "foreground": "#2496ED",
+  "properties": {
+    "display_default": false
+  },
+  "template": "##ICON## {{ .Context }} "
+}

@@ -1,0 +1,10 @@
+{
+  "type": "php",
+  "style": "plain",
+  "foreground": "#777BB4",
+  "properties": {
+    "display_mode": "files",
+    "files": ["composer.json", ".php-version", "*.php"]
+  },
+  "template": "##ICON## {{ .Full }} "
+}

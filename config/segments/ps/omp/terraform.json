@@ -1,0 +1,10 @@
+{
+  "type": "terraform",
+  "style": "plain",
+  "foreground": "#844FBA",
+  "properties": {
+    "display_default": false,
+    "fetch_version": false
+  },
+  "template": "##ICON## {{ .WorkspaceName }} "
+}

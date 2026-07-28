@@ -51,22 +51,51 @@ function _Ensure-TerminalIcons {
 }
 
 function _Deploy-OmpTheme {
-    $configSrc  = Join-Path $PSScriptRoot "..\config\omp_config.json"
+    $baseConfig = Join-Path $PSScriptRoot "..\config\base\omp_base.json"
+    $segDir     = Join-Path $PSScriptRoot "..\config\segments\ps\omp"
     $configDest = Join-Path $HOME ".omp_config.json"
 
-    if (-not (Test-Path $configSrc)) {
-        Write-Err "omp_config.json not found at: $configSrc"
+    if (-not (Test-Path $baseConfig)) {
+        Write-Err "omp base config not found at: $baseConfig"
         exit 1
     }
 
     if (Test-Path $configDest) {
-        $timestamp  = Get-Date -Format "yyyyMMddHHmmss"
-        $backup     = "${configDest}.bak.${timestamp}"
+        $timestamp = Get-Date -Format "yyyyMMddHHmmss"
+        $backup    = "${configDest}.bak.${timestamp}"
         Write-Warn "Existing ~/.omp_config.json found - backing up to $backup"
         Copy-Item $configDest $backup
         Manifest-Set "omp_config_backup" $backup
     }
 
-    Copy-Item $configSrc $configDest
-    Write-Success "~/.omp_config.json deployed"
+    # Load icon registry from icons.tsv
+    $iconsTsv = Join-Path $PSScriptRoot "..\config\icons.tsv"
+    $iconMap = @{}
+    foreach ($line in (Get-Content $iconsTsv)) {
+        if ($line -match '^#' -or $line.Trim() -eq '') { continue }
+        $cols = $line -split "`t"
+        if ($cols.Count -lt 5) { continue }
+        $iconMap[$cols[0]] = @{ nerd = $cols[1]; emoji = $cols[2]; unicode = $cols[3]; ascii = $cols[4] }
+    }
+
+    # Assemble segment JSON array from selected segments
+    $segmentJsons = @()
+    foreach ($key in $script:SelectedSegments) {
+        $segFile = Join-Path $segDir "${key}.json"
+        if (Test-Path $segFile) {
+            $content = (Get-Content $segFile -Raw).Trim()
+            $icon = if ($iconMap.ContainsKey($key)) {
+                $iconMap[$key][$script:IconMode]
+            } else { "" }
+            $content = $content -replace '##ICON##', $icon
+            $segmentJsons += $content
+        }
+    }
+    $segmentsBlock = $segmentJsons -join ",`n        "
+
+    $config = Get-Content $baseConfig -Raw
+    $config = $config -replace '##SEGMENTS##', $segmentsBlock
+    $config | Set-Content -Path $configDest -Encoding UTF8
+
+    Write-Success "~/.omp_config.json assembled with segments: $($script:SelectedSegments -join ', ')"
 }

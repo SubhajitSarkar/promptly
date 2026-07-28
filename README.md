@@ -1,125 +1,172 @@
-# simple-zsh-setup
+<div align="center">
 
-A one-command terminal prompt setup for full stack developers.
+# promptly
 
-On **macOS, Linux, and WSL2** it sets up [zsh](https://www.zsh.org/) with [Oh My Zsh](https://ohmyz.sh/) and the [Powerlevel10k](https://github.com/romkatv/powerlevel10k) theme - giving you a fast, informative prompt with git status, language version segments (Node, Python, Go, Rust), execution time, and more.
+### Your terminal prompt, set up in one command.
 
-On **Windows** it sets up [Oh My Posh](https://ohmyposh.dev/) for PowerShell 7 with a matching theme.
+*Stop configuring. Start coding.*
 
-If you just want a better terminal prompt without spending hours configuring it manually, this is for you.
+![promptly in action](screenshots/mac.png)
 
-| Platform                      | Script            | Prompt              |
-| ----------------------------- | ----------------- | ------------------- |
-| macOS                         | `bash install.sh` | Powerlevel10k (zsh) |
-| Linux (apt/dnf/pacman/zypper) | `bash install.sh` | Powerlevel10k (zsh) |
-| WSL2                          | `bash install.sh` | Powerlevel10k (zsh) |
-| Windows (PowerShell 7+)       | `.\install.ps1`   | Oh My Posh          |
+</div>
 
-## Do you need this?
+---
 
-**Yes, if you want:**
+Most developers spend hours getting their terminal right — installing Oh My Zsh, hunting for a theme, wiring up plugins, tweaking configs — only to do it all over again on the next machine.
 
-- A prompt that shows git branch, status, and language versions automatically
-- Syntax highlighting and autosuggestions in your terminal
-- A pre-configured setup that works out of the box for full stack development
-- A repeatable install you can run on any new machine
+**promptly** does it in under a minute, on any machine, with a single command.
 
-**No, if:**
+You get git status, language version segments (Node, Python, Go, Rust and more), syntax highlighting, autosuggestions, and execution time — all pre-configured and ready to go. Pick exactly the segments you want from an interactive checklist. No Nerd Font? No problem — promptly detects what your terminal can render and adapts automatically.
 
-- You already have a prompt setup you are happy with
-- You prefer to configure your shell manually
-- You are on a locked-down machine where you cannot install packages (though the script handles this gracefully - see [Re-run safety](#re-run-safety))
+---
 
-## What it installs
+## Install
 
-### macOS / Linux / WSL (`install.sh`)
+### macOS / Linux / WSL2
 
-- zsh (if not present)
-- oh-my-zsh
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/SubhajitSarkar/promptly/main/install.sh)
+```
+
+> No git clone needed. Paste and run.
+
+### Windows (PowerShell 7+)
+
+```powershell
+irm https://raw.githubusercontent.com/SubhajitSarkar/promptly/main/install.ps1 | iex
+```
+
+### Or clone and run
+
+```bash
+git clone git@github.com:SubhajitSarkar/promptly.git
+cd promptly
+bash install.sh
+```
+
+---
+
+## What you get
+
+| Platform                      | Prompt engine       |
+| ----------------------------- | ------------------- |
+| macOS                         | Powerlevel10k (zsh) |
+| Linux (apt/dnf/pacman/zypper) | Powerlevel10k (zsh) |
+| WSL2                          | Powerlevel10k (zsh) |
+| Windows (PowerShell 7+)       | Oh My Posh          |
+
+### macOS / Linux / WSL
+
+- zsh (if not already installed)
+- Oh My Zsh
 - Plugins: `zsh-autosuggestions`, `zsh-syntax-highlighting`, `zsh-nvm`, `z`, `npm`
-- Powerlevel10k theme
-- Full stack `~/.p10k.zsh` config
+- Powerlevel10k theme with a full stack config
 
-### Windows (`install.ps1`)
+### Windows
 
 - PowerShell 7 (if on PS5)
 - Oh My Posh
 - PSReadLine (syntax highlighting + autosuggestions)
-- Terminal-Icons (file icons)
-- Full stack `~/.omp_config.json` theme
+- Terminal-Icons (file icons in `ls` output)
 
-## Usage
+---
 
-### macOS / Linux / WSL
+## Do you need this?
 
-```bash
-git clone git@github.com:SubhajitSarkar/simple-zsh-setup.git
-cd simple-zsh-setup
-chmod +x install.sh
-./install.sh
-```
+**Yes, if:**
 
-### Windows (PowerShell 7)
+- You want a prompt that shows git branch, status, and language versions automatically
+- You set up new machines regularly and want a repeatable one-command install
+- You want syntax highlighting and autosuggestions without manual plugin wiring
+- You've been meaning to sort out your terminal for months and just want it done
 
-```powershell
-git clone git@github.com:SubhajitSarkar/simple-zsh-setup.git
-cd simple-zsh-setup
-.\install.ps1
-```
+**No, if:**
+
+- You already have a prompt setup you are happy with
+- You prefer to hand-craft your shell config
+- You are on a locked-down machine where you cannot install packages _(though promptly handles this gracefully — see [Re-run safety](#re-run-safety))_
+
+---
+
+## Interactive segment picker
+
+During install, promptly shows a checklist — use arrow keys and space to pick exactly the segments you want on your prompt. Nothing is forced on you.
+
+| Segment                                                 | Shows when                              | On by default |
+| ------------------------------------------------------- | --------------------------------------- | :-----------: |
+| `node` / `nvm`                                          | Inside a JS/TS project                  | ✔             |
+| `python` / `virtualenv`                                 | Python version active or venv activated | ✔             |
+| `go`                                                    | Inside a Go project (`go.mod`)          | ✔             |
+| `rust`                                                  | Inside a Rust project (`Cargo.toml`)    | ✔             |
+| `execution time`                                        | Command took > 3 seconds                | ✔             |
+| `time`                                                  | Always (right side)                     | ✔             |
+| `ruby`, `java`, `php`, `dotnet`, `swift`                | Inside matching projects                | ✗             |
+| `aws`, `azure`, `gcp`, `docker`, `terraform`, `kubectl` | When cloud/devops tools are active      | ✗             |
+| `battery`, `disk_usage`, `ram`, `load`, `vpn`           | System conditions                       | ✗             |
+
+See **[docs/SEGMENTS.md](docs/SEGMENTS.md)** for the full list and how to add your own.
+
+---
+
+## No Nerd Font? No problem.
+
+promptly asks what your terminal can actually render and adapts:
+
+1. **Nerd Font** — full icon set (recommended, see [docs/FONT_SETUP.md](docs/FONT_SETUP.md))
+2. **Emoji** — 🐍 ☁ 🐳 ⚙ — works on any modern terminal with no font install
+3. **Unicode** — ⬡ ☸ ○ — plain symbols, broadest compatibility
+4. **ASCII** — `[node]` `[py]` `[k8s]` — works everywhere, guaranteed
+
+The font is never a hard requirement. The prompt works at every level.
+
+---
 
 ## After install
 
-1. **Install the font** - see [docs/FONT_SETUP.md](docs/FONT_SETUP.md) _(the script does not do this automatically)_
-2. macOS/Linux: `source ~/.zshrc` or open a new terminal
-3. Windows: `. $PROFILE` or open a new terminal
+1. macOS / Linux / WSL: `source ~/.zshrc` or open a new terminal
+2. Windows: `. $PROFILE` or open a new terminal
+3. Want to change your prompt style? Run `p10k configure` anytime
 
-## Reconfigure Prompt
+---
 
-Run the interactive wizard anytime to reconfigure your prompt:
+## Re-run safety
 
-```bash
-p10k configure
-```
+Both scripts are fully idempotent — safe to re-run on the same machine. They will:
 
-This re-runs the full setup wizard - style, icons, segments, colors - and overwrites `~/.p10k.zsh`.
+- Skip already-installed components
+- Back up existing configs with timestamps before touching them
 
-## No font? Use ASCII mode
+---
 
-The pre-built `config/p10k.zsh` in this repo assumes a Nerd Font is installed. If you don't want to install a font, run `p10k configure` after install and:
+## Rollback
 
-1. Answer **No** to the icon/diamond/lock questions when asked
-2. Or select the **Pure** style - it is entirely ASCII with no font dependency
-
-This overwrites the deployed config with your ASCII preference. The font is only needed for icons - the prompt itself works fine without it.
-
-## Font Setup
-
-The script does **not** install the font automatically. See **[docs/FONT_SETUP.md](docs/FONT_SETUP.md)** for download links and setup instructions for all terminals and IDEs.
-
-## Prompt segments (right side)
-
-| Segment                 | Shows when                              |
-| ----------------------- | --------------------------------------- |
-| `node` / `nvm`          | Inside a JS/TS project                  |
-| `python` / `virtualenv` | Python version active or venv activated |
-| `go`                    | Inside a Go project (`go.mod`)          |
-| `rust`                  | Inside a Rust project (`Cargo.toml`)    |
-| `execution time`        | Command took > 3 seconds                |
-| `git`                   | Inside any git repository               |
-
-## Structure
+Backups are created automatically before anything is modified:
 
 ```
-simple-zsh-setup/
-├── install.sh          # Entry point - macOS / Linux / WSL
-├── install.ps1         # Entry point - Windows PowerShell
-├── uninstall.sh        # Uninstaller - macOS / Linux / WSL
-├── uninstall.ps1       # Uninstaller - Windows PowerShell
+~/.zshrc.bak.<timestamp>
+~/.p10k.zsh.bak.<timestamp>
+$PROFILE.bak.<timestamp>          # Windows
+~/.omp_config.json.bak.<timestamp> # Windows
+```
+
+To fully uninstall and restore your previous state: **[docs/UNINSTALL.md](docs/UNINSTALL.md)**
+
+---
+
+## Project structure
+
+```
+promptly/
+├── install.sh          # Entry point — macOS / Linux / WSL
+├── install.ps1         # Entry point — Windows PowerShell
+├── uninstall.sh        # Uninstaller — macOS / Linux / WSL
+├── uninstall.ps1       # Uninstaller — Windows PowerShell
 ├── lib/                # Bash modules
 │   ├── logger.sh
 │   ├── detect.sh
 │   ├── fallback.sh
 │   ├── manifest.sh
+│   ├── picker.sh
 │   ├── deps.sh
 │   ├── omz.sh
 │   ├── p10k.sh
@@ -130,33 +177,28 @@ simple-zsh-setup/
 │   ├── Detect.ps1
 │   ├── Deps.ps1
 │   ├── Manifest.ps1
+│   ├── Picker.ps1
 │   ├── OhMyPosh.ps1
 │   ├── Profile.ps1
 │   └── Uninstall.ps1
 └── config/
-    ├── p10k.zsh        # Powerlevel10k config (zsh)
-    └── omp_config.json # Oh My Posh config (PowerShell)
+    ├── icons.tsv           # Icon registry — nerd / emoji / unicode / ascii
+    ├── base/
+    │   ├── p10k_base.zsh   # Base Powerlevel10k layout
+    │   └── omp_base.json   # Base Oh My Posh layout
+    └── segments/
+        ├── zsh/
+        │   └── p10k/       # One .zsh file per segment (Powerlevel10k)
+        └── ps/
+            └── omp/        # One .json file per segment (Oh My Posh)
 ```
 
-## Re-run safety
+---
 
-Both scripts are fully idempotent - safe to re-run. They will:
+<div align="center">
 
-- Skip already-installed components
-- Back up existing configs with timestamps before modifying
+Made for developers who want a great terminal without the yak shaving.
 
-## Rollback
+**[Font setup](docs/FONT_SETUP.md) · [Segments](docs/SEGMENTS.md) · [Uninstall](docs/UNINSTALL.md)**
 
-Backups are created automatically:
-
-```bash
-# zsh
-~/.zshrc.bak.<timestamp>
-~/.p10k.zsh.bak.<timestamp>
-
-# PowerShell
-$PROFILE.bak.<timestamp>
-~/.omp_config.json.bak.<timestamp>
-```
-
-To fully uninstall and revert to your previous state, see **[docs/UNINSTALL.md](docs/UNINSTALL.md)**.
+</div>

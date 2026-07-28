@@ -1,0 +1,12 @@
+# segment: python
+# description: Shows Python version and virtualenv when active
+# elements: pyenv virtualenv
+typeset -g POWERLEVEL9K_PYENV_FOREGROUND=37
+typeset -g POWERLEVEL9K_PYENV_SOURCES=(shell local global)
+typeset -g POWERLEVEL9K_PYENV_PROMPT_ALWAYS_SHOW=false
+typeset -g POWERLEVEL9K_PYENV_SHOW_SYSTEM=true
+typeset -g POWERLEVEL9K_PYENV_VISUAL_IDENTIFIER_EXPANSION='##ICON##'
+typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=37
+typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false
+typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_WITH_PYENV=false
+typeset -g POWERLEVEL9K_{CONDA,PYENV}_CONTENT_EXPANSION='${P9K_CONTENT}'

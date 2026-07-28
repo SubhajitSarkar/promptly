@@ -1,0 +1,9 @@
+{
+  "type": "az",
+  "style": "plain",
+  "foreground": "#0078D4",
+  "properties": {
+    "display_default": false
+  },
+  "template": "##ICON## {{ .Name }} "
+}

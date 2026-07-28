@@ -1,0 +1,11 @@
+{
+  "type": "python",
+  "style": "plain",
+  "foreground": "#89DCEB",
+  "properties": {
+    "display_mode": "files",
+    "fetch_virtual_env": true,
+    "files": ["*.py", "requirements.txt", "pyproject.toml", "Pipfile", ".python-version"]
+  },
+  "template": "##ICON## {{ if .Venv }}({{ .Venv }}) {{ end }}{{ .Full }} "
+}

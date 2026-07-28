@@ -1,0 +1,10 @@
+{
+  "type": "go",
+  "style": "plain",
+  "foreground": "#89B4FA",
+  "properties": {
+    "display_mode": "files",
+    "files": ["go.mod", "go.sum", "*.go"]
+  },
+  "template": "##ICON## {{ .Full }} "
+}

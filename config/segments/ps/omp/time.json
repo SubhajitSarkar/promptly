@@ -1,0 +1,6 @@
+{
+  "type": "time",
+  "style": "plain",
+  "foreground": "#6C7086",
+  "template": "##ICON## {{ .CurrentDate | date \"03:04 PM\" }} "
+}

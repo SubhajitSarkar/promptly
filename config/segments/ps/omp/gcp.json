@@ -1,0 +1,9 @@
+{
+  "type": "gcp",
+  "style": "plain",
+  "foreground": "#4285F4",
+  "properties": {
+    "display_default": false
+  },
+  "template": "##ICON## {{ .Project }} "
+}

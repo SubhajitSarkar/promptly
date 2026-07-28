@@ -1,0 +1,9 @@
+{
+  "type": "kubectl",
+  "style": "plain",
+  "foreground": "#326CE5",
+  "properties": {
+    "display_default": false
+  },
+  "template": "##ICON## {{ .Context }}{{ if .Namespace }} :: {{ .Namespace }}{{ end }} "
+}

@@ -1,0 +1,11 @@
+{
+  "type": "node",
+  "style": "plain",
+  "foreground": "#A6E3A1",
+  "properties": {
+    "fetch_package_manager": true,
+    "display_mode": "files",
+    "files": ["package.json", ".nvmrc", ".node-version"]
+  },
+  "template": "##ICON## {{ .Full }} "
+}

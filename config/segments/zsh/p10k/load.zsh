@@ -1,0 +1,8 @@
+# segment: load
+# description: Shows system CPU load average (1 min)
+# elements: load
+typeset -g POWERLEVEL9K_LOAD_WHICH=1
+typeset -g POWERLEVEL9K_LOAD_NORMAL_FOREGROUND=66
+typeset -g POWERLEVEL9K_LOAD_WARNING_FOREGROUND=220
+typeset -g POWERLEVEL9K_LOAD_CRITICAL_FOREGROUND=160
+typeset -g POWERLEVEL9K_LOAD_VISUAL_IDENTIFIER_EXPANSION='##ICON##'
