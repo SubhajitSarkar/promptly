@@ -39,9 +39,17 @@ irm https://raw.githubusercontent.com/SubhajitSarkar/promptly/main/install.ps1 |
 ### Or clone and run
 
 ```bash
+# macOS / Linux / WSL
 git clone git@github.com:SubhajitSarkar/promptly.git
 cd promptly
 bash install.sh
+```
+
+```powershell
+# Windows (PowerShell 7+)
+git clone git@github.com:SubhajitSarkar/promptly.git
+cd promptly
+.\install.ps1
 ```
 
 ---

@@ -1,4 +1,4 @@
-# lib-ps/Picker.ps1 - Interactive spacebar checklist for segment selection
+﻿# lib-ps/Picker.ps1 - Interactive spacebar checklist for segment selection
 
 $script:SegmentDefs = @(
   # Languages
@@ -41,7 +41,7 @@ function Invoke-SegmentPicker {
         [Console]::SetCursorPosition(0, 0)
         Write-Host ""
         Write-Host "  Select prompt segments (Up/Down move, Space toggle, Enter confirm)" -ForegroundColor Cyan
-        Write-Host "  ────────────────────────────────────────────────" -ForegroundColor Cyan
+        Write-Host "  ------------------------------------------------" -ForegroundColor Cyan
         for ($i = 0; $i -lt $count; $i++) {
             $box    = if ($selected[$i]) { "[x]" } else { "[ ]" }
             $prefix = if ($i -eq $cursor) { "  > " } else { "    " }
@@ -49,7 +49,7 @@ function Invoke-SegmentPicker {
             Write-Host "$prefix$box $($defs[$i].Label)  " -ForegroundColor $color -NoNewline
             Write-Host $defs[$i].Desc -ForegroundColor Yellow
         }
-        Write-Host "  ────────────────────────────────────────────────" -ForegroundColor Cyan
+        Write-Host "  ------------------------------------------------" -ForegroundColor Cyan
     }
 
     [Console]::CursorVisible = $false

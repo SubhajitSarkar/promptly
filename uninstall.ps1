@@ -1,4 +1,4 @@
-# uninstall.ps1 - Revert all changes made by install.ps1
+﻿# uninstall.ps1 - Revert all changes made by install.ps1
 # Reads ~/.promptly/manifest.json to know exactly what to undo
 
 #Requires -Version 5.1

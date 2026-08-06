@@ -1,4 +1,4 @@
-# lib-ps/Detect.ps1 - Detect PowerShell version and Windows environment
+﻿# lib-ps/Detect.ps1 - Detect PowerShell version and Windows environment
 # Sets: $script:PSMajorVersion, $script:IsWinGetAvailable, $script:IsAdmin
 
 function Invoke-Detect {

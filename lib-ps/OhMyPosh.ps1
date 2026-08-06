@@ -1,4 +1,4 @@
-# lib-ps/OhMyPosh.ps1 - Install Oh My Posh, PSReadLine, Terminal-Icons
+﻿# lib-ps/OhMyPosh.ps1 - Install Oh My Posh, PSReadLine, Terminal-Icons
 # and deploy the full stack omp_config.json theme
 
 function Install-OhMyPosh {

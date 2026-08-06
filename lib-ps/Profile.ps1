@@ -1,4 +1,4 @@
-# lib-ps/Profile.ps1 - Idempotent $PROFILE patching
+﻿# lib-ps/Profile.ps1 - Idempotent $PROFILE patching
 
 function Patch-Profile {
     Write-Header "Patching PowerShell `$PROFILE"

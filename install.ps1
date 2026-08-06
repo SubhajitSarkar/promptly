@@ -1,4 +1,4 @@
-# install.ps1 - Entry point for Oh My Posh full stack setup on Windows
+﻿# install.ps1 - Entry point for Oh My Posh full stack setup on Windows
 # Supports: Windows PowerShell 7+ (native)
 # For macOS/Linux/WSL: use install.sh instead
 #
@@ -14,7 +14,9 @@ $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
 
 # ─── Guard: must be Windows ───────────────────────────────────────────────────
-if (-not $IsWindows -and $PSVersionTable.PSVersion.Major -ge 6) {
+# $IsWindows only exists in PS6+; on PS5 we are always on Windows
+$_isWindows = if ($PSVersionTable.PSVersion.Major -ge 6) { $IsWindows } else { $true }
+if (-not $_isWindows) {
     Write-Host "[ERROR] This script is for Windows only." -ForegroundColor Red
     Write-Host "        For macOS/Linux/WSL, run: bash install.sh" -ForegroundColor Yellow
     exit 1

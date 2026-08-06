@@ -1,4 +1,4 @@
-# lib-ps/Manifest.ps1 - Records install state to ~/.promptly/manifest.json
+﻿# lib-ps/Manifest.ps1 - Records install state to ~/.promptly/manifest.json
 
 $ManifestDir  = Join-Path $HOME ".promptly"
 $ManifestFile = Join-Path $ManifestDir "manifest.json"

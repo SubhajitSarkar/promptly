@@ -1,4 +1,4 @@
-# lib-ps/Deps.ps1 - Install core dependencies via winget
+﻿# lib-ps/Deps.ps1 - Install core dependencies via winget
 
 function Install-Deps {
     Write-Header "Checking Dependencies"
@@ -17,6 +17,12 @@ function _Ensure-PS7 {
     Write-Warn "PowerShell 5 detected. PowerShell 7 is required for best experience."
     Write-Info "Installing PowerShell 7 via winget..."
     winget install --id Microsoft.PowerShell --source winget --accept-package-agreements --accept-source-agreements
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warn "winget install failed (exit code: $LASTEXITCODE). Opening download page..."
+        Start-Process "https://aka.ms/install-powershell"
+        Write-Err "Please install PowerShell 7 manually, then re-run this script in a new pwsh terminal."
+        exit 1
+    }
     Write-Success "PowerShell 7 installed. Please re-run this script in a new pwsh terminal."
     exit 0
 }

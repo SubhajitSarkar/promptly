@@ -1,4 +1,4 @@
-# lib-ps/Uninstall.ps1 - Revert all changes made by install.ps1
+﻿# lib-ps/Uninstall.ps1 - Revert all changes made by install.ps1
 
 function Invoke-Uninstall {
     $manifestFile = Join-Path $HOME ".promptly\manifest.json"
